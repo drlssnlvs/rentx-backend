@@ -34,7 +34,8 @@
         "no-unused-expressions": "off",
         "no-constant-condition": "off",
         "@typescript-eslint/ban-ts-comment": "off",
-        "camelcase": "off"
+        "camelcase": "off",
+        "no-useless-constructor": "off"
     },
     "settings": {
         "import/resolver": {
