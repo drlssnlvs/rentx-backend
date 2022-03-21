@@ -1,15 +1,24 @@
-import CategoryModel from "../models/categoriesModel";
+import CategoryModel from "../../models/categoriesModel";
 
 import {
   ICategoriesRepository,
   ICreateCategoryDTO,
-} from "./ICategoriesRepository";
+} from "../ICategoriesRepository";
 
 export default class CategoryRepository implements ICategoriesRepository {
   private categories: CategoryModel[];
 
-  constructor() {
+  private static INSTANCE: CategoryRepository;
+
+  private constructor() {
     this.categories = [];
+  }
+
+  public static getInstance(): CategoryRepository {
+    if (!CategoryRepository.INSTANCE)
+      CategoryRepository.INSTANCE = new CategoryRepository();
+
+    return CategoryRepository.INSTANCE;
   }
 
   create({ name, description }: ICreateCategoryDTO): CategoryModel {
