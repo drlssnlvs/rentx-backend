@@ -10,7 +10,7 @@ export default class CreateCategoryService {
 
   execute({ name, description }: IRequest) {
     const checkIfCategoryAlreadyRegister =
-      this.categoryRepository.findCategoryByName(name);
+      this.categoryRepository.findByName(name);
 
     if (checkIfCategoryAlreadyRegister) {
       throw new Error("category already register");
