@@ -25,7 +25,10 @@ export default class CraeteSpceificationService {
         .on("data", (line) =>
           categories.push({ name: line[0], description: line[1] })
         )
-        .on("end", () => resolve(categories))
+        .on("end", () => {
+          fs.promises.unlink(file.path);
+          return resolve(categories);
+        })
         .on("error", (err) => reject(err));
     });
   }
