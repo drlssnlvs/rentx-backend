@@ -1,3 +1,5 @@
+import "./env";
+
 import express from "express";
 import signale from "signale";
 import swaggerUi from "swagger-ui-express";
