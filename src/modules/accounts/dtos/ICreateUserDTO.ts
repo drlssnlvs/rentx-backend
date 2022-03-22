@@ -1,4 +1,4 @@
-export interface IcreateUserDTO {
+export interface ICreateUserDTO {
   id?: string;
 
   name: string;
@@ -14,4 +14,10 @@ export interface IcreateUserDTO {
   createdAt?: Date;
 
   updatedAt?: Date;
+}
+
+export interface ICreateSessionDTO {
+  email: string;
+
+  password: string;
 }

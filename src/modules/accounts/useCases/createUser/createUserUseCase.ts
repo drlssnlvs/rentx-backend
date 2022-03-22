@@ -1,10 +1,10 @@
 import { inject, injectable } from "tsyringe";
+import { hash } from "bcryptjs";
+
 import User from "../../entities/User";
 
 import { IUsersRepository } from "../../repositories/IUsersRepository";
-import { IcreateUserDTO } from "../../dtos/ICreateUserDTO";
-
-import { encrypt } from "../../../../commons/constants";
+import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 
 @injectable()
 export default class CreateUserUseCase {
@@ -18,7 +18,7 @@ export default class CreateUserUseCase {
     password,
     email,
     driverLicense,
-  }: IcreateUserDTO): Promise<User | undefined> {
+  }: ICreateUserDTO): Promise<User | undefined> {
     const checkIfUserAlreadyRegister = await this.usersRepository.findByEmail(
       email
     );
@@ -27,7 +27,7 @@ export default class CreateUserUseCase {
       throw new Error("user already register");
     }
 
-    const hashedPassword = encrypt(password);
+    const hashedPassword = await hash(password, 8);
 
     const user = await this.usersRepository.create({
       name,

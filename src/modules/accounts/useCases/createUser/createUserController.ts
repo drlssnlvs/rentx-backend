@@ -8,15 +8,15 @@ export default class CreateUserController {
 
     const { name, password, email, driverLicense } = req.body;
 
-    const category = await createUserUseCase.execute({
+    const user = await createUserUseCase.execute({
       name,
       password,
       email,
       driverLicense,
     });
 
-    delete category?.password;
+    delete user.password;
 
-    return res.status(201).json(category);
+    return res.status(201).json(user);
   }
 }

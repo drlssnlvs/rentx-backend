@@ -3,7 +3,7 @@ import User from "../../entities/User";
 
 import { IUsersRepository } from "../IUsersRepository";
 
-import { IcreateUserDTO } from "../../dtos/ICreateUserDTO";
+import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 
 export default class UsersRepository implements IUsersRepository {
   private repository: Repository<User>;
@@ -23,7 +23,7 @@ export default class UsersRepository implements IUsersRepository {
     password,
     email,
     driverLicense,
-  }: IcreateUserDTO): Promise<User> {
+  }: ICreateUserDTO): Promise<User> {
     const user = this.repository.create({
       name,
       password,
