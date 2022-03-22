@@ -12,15 +12,15 @@ const categoryRouter = Router();
 const upload = multer(uploadConfig);
 
 categoryRouter.post("/", (req, res) =>
-  createCategoryController.handle(req, res)
+  createCategoryController().handle(req, res)
 );
 
 categoryRouter.get("/", (req, res) =>
-  listCategoriesController.handle(req, res)
+  listCategoriesController().handle(req, res)
 );
 
 categoryRouter.post("/import", upload.single("file"), async (req, res) => {
-  await importCategoryController.handle(req, res);
+  await importCategoryController().handle(req, res);
 });
 
 export default categoryRouter;

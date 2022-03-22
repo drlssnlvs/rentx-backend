@@ -5,7 +5,7 @@ import createSpecificationController from "../modules/cars/useCases/createSpecif
 const specificationRouter = Router();
 
 specificationRouter.post("/", (req, res) =>
-  createSpecificationController.handle(req, res)
+  createSpecificationController().handle(req, res)
 );
 
 export default specificationRouter;

@@ -1,4 +1,5 @@
 import { ISpecificationsRepository } from "../../repositories/ISpecificationsRepository";
+import Specification from "../../entities/Specification";
 
 interface IRequest {
   name: string;
@@ -8,15 +9,15 @@ interface IRequest {
 export default class CreateSpecificationUseCase {
   constructor(private specificationRepository: ISpecificationsRepository) {}
 
-  execute({ name, description }: IRequest) {
+  async execute({ name, description }: IRequest): Promise<Specification> {
     const checkIfSpecificationAlreadyRegister =
-      this.specificationRepository.findByName(name);
+      await this.specificationRepository.findByName(name);
 
     if (checkIfSpecificationAlreadyRegister) {
       throw new Error("specification already register");
     }
 
-    const specification = this.specificationRepository.create({
+    const specification = await this.specificationRepository.create({
       name,
       description,
     });

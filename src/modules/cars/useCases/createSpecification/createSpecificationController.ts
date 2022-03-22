@@ -4,10 +4,10 @@ import CreateSpecificationUseCase from "./createSpecificationUseCase";
 export default class CreateSpecificationController {
   constructor(private createSpecificationUseCase: CreateSpecificationUseCase) {}
 
-  handle(req: Request, res: Response): Response {
+  async handle(req: Request, res: Response): Promise<Response> {
     const { name, description } = req.body;
 
-    const specification = this.createSpecificationUseCase.execute({
+    const specification = await this.createSpecificationUseCase.execute({
       name,
       description,
     });
