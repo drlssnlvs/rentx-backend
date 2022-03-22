@@ -1,8 +1,7 @@
 import csvParser from "csv-parse";
 import fs from "fs";
 import { inject, injectable } from "tsyringe";
-
-import CategoriesRepository from "../../repositories/implementations/CategoriesRepository";
+import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
 interface ICategory {
   name: string;
@@ -13,7 +12,7 @@ interface ICategory {
 export default class CraeteSpceificationService {
   constructor(
     @inject("CategoriesRepository")
-    private categoriesRepository: CategoriesRepository
+    private categoriesRepository: ICategoriesRepository
   ) {}
 
   loadCategories(file: any) {
