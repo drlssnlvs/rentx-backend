@@ -1,5 +1,6 @@
 import csvParser from "csv-parse";
 import fs from "fs";
+import { inject, injectable } from "tsyringe";
 
 import CategoriesRepository from "../../repositories/implementations/CategoriesRepository";
 
@@ -8,8 +9,12 @@ interface ICategory {
   description: string;
 }
 
+@injectable()
 export default class CraeteSpceificationService {
-  constructor(private categoriesRepository: CategoriesRepository) {}
+  constructor(
+    @inject("CategoriesRepository")
+    private categoriesRepository: CategoriesRepository
+  ) {}
 
   loadCategories(file: any) {
     return new Promise((resolve, reject) => {

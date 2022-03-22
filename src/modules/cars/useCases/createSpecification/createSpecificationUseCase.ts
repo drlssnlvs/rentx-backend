@@ -1,13 +1,19 @@
-import { ISpecificationsRepository } from "../../repositories/ISpecificationsRepository";
+import { inject, injectable } from "tsyringe";
+
 import Specification from "../../entities/Specification";
+import SpecificationsRepository from "../../repositories/implementations/SpecificationsRepository";
 
 interface IRequest {
   name: string;
   description: string;
 }
 
+@injectable()
 export default class CreateSpecificationUseCase {
-  constructor(private specificationsRepository: ISpecificationsRepository) {}
+  constructor(
+    @inject("SpecificationsRepository")
+    private specificationsRepository: SpecificationsRepository
+  ) {}
 
   async execute({ name, description }: IRequest): Promise<Specification> {
     const checkIfSpecificationAlreadyRegister =
