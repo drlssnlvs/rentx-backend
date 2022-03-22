@@ -4,6 +4,7 @@ import { inject, injectable } from "tsyringe";
 import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
 import BaseUseCase from "../../../../commons/BaseUseCase";
+import { files } from "../../../../commons/constants";
 
 interface ICategory {
   name: string;
@@ -33,8 +34,8 @@ export default class CraeteSpceificationService extends BaseUseCase {
         .on("data", (line) =>
           categories.push({ name: line[0], description: line[1] })
         )
-        .on("end", () => {
-          fs.promises.unlink(file.path);
+        .on("end", async () => {
+          await files.delete(file.path);
           return resolve(categories);
         })
         .on("error", (err) => reject(err));

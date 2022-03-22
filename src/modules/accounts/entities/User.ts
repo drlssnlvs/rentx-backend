@@ -26,6 +26,12 @@ export default class Users {
   @Column()
   admin?: false;
 
+  @Column()
+  avatarId?: string;
+
+  @Column()
+  avatarSrc?: string;
+
   @CreateDateColumn()
   createdAt?: Date;
 

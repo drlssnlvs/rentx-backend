@@ -29,6 +29,7 @@
         "no-param-reassign": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-namespace": "off",
         "no-new": "off",
         "prefer-promise-reject-errors": "off",
         "no-unused-expressions": "off",

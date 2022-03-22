@@ -1,4 +1,4 @@
-import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
+import { ICreateUserDTO, IUpdateAvatar } from "../dtos/ICreateUserDTO";
 import User from "../entities/User";
 
 export interface IUsersRepository {
@@ -11,4 +11,5 @@ export interface IUsersRepository {
 
   findByEmail(email: string): Promise<User | undefined>;
   findById(id: string): Promise<User | undefined>;
+  updateUserAvatar(userId: string, data: IUpdateAvatar): Promise<void>;
 }

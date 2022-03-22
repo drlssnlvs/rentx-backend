@@ -3,6 +3,16 @@ import { verify } from "jsonwebtoken";
 
 import UsersRepository from "../modules/accounts/repositories/implementatiosn/UsersRepository";
 
+declare global {
+  namespace Express {
+    export interface Request {
+      user: {
+        id: string;
+      };
+    }
+  }
+}
+
 interface IDecodedToken {
   sub: string;
 }
@@ -17,7 +27,7 @@ export const FORBIDDEN = {
   msg: ["FORBIDDEN"],
 };
 
-export default function bearerAuth(
+export default async function bearerAuth(
   req: Request,
   res: Response,
   next: NextFunction
@@ -37,13 +47,17 @@ export default function bearerAuth(
 
     const usersRepository = new UsersRepository();
 
-    const user = usersRepository.findById(id);
+    const user = await usersRepository.findById(id);
 
     if (!user) {
       return res
         .status(UNAUTHORIZED.code)
         .json({ r: false, errors: UNAUTHORIZED.msg });
     }
+
+    req.user = {
+      id: user.id,
+    };
 
     next();
   } catch (error) {
