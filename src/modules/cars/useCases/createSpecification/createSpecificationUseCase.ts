@@ -7,17 +7,17 @@ interface IRequest {
 }
 
 export default class CreateSpecificationUseCase {
-  constructor(private specificationRepository: ISpecificationsRepository) {}
+  constructor(private specificationsRepository: ISpecificationsRepository) {}
 
   async execute({ name, description }: IRequest): Promise<Specification> {
     const checkIfSpecificationAlreadyRegister =
-      await this.specificationRepository.findByName(name);
+      await this.specificationsRepository.findByName(name);
 
     if (checkIfSpecificationAlreadyRegister) {
       throw new Error("specification already register");
     }
 
-    const specification = await this.specificationRepository.create({
+    const specification = await this.specificationsRepository.create({
       name,
       description,
     });

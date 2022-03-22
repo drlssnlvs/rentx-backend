@@ -6,7 +6,7 @@ import {
   ICreateSpecifiactionDTO,
 } from "../ISpecificationsRepository";
 
-export default class SpecificationRepository
+export default class SpecificationsRepository
   implements ISpecificationsRepository
 {
   private repository: Repository<Specification>;

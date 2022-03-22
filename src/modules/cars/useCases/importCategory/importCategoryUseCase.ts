@@ -1,7 +1,7 @@
 import csvParser from "csv-parse";
 import fs from "fs";
 
-import CategoryRepository from "../../repositories/implementations/categoriesRepository";
+import CategoriesRepository from "../../repositories/implementations/CategoriesRepository";
 
 interface ICategory {
   name: string;
@@ -9,7 +9,7 @@ interface ICategory {
 }
 
 export default class CraeteSpceificationService {
-  constructor(private categoryRepository: CategoryRepository) {}
+  constructor(private categoriesRepository: CategoriesRepository) {}
 
   loadCategories(file: any) {
     return new Promise((resolve, reject) => {
@@ -38,10 +38,10 @@ export default class CraeteSpceificationService {
 
     categories.map(async ({ name, description }: ICategory) => {
       const checkIfCategoryAlreadyRegister =
-        this.categoryRepository.findByName(name);
+        this.categoriesRepository.findByName(name);
 
       if (!checkIfCategoryAlreadyRegister) {
-        this.categoryRepository.create({ name, description });
+        this.categoriesRepository.create({ name, description });
       }
     });
   }
