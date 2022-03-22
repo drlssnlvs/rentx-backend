@@ -1,9 +1,10 @@
+import {
+  ICreateUserDTO,
+  IUpdateAvatar,
+} from "@modules/accounts/dtos/ICreateUserDTO";
+import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { getRepository, Repository } from "typeorm";
-import User from "../../entities/User";
-
-import { IUsersRepository } from "../IUsersRepository";
-
-import { ICreateUserDTO, IUpdateAvatar } from "../../dtos/ICreateUserDTO";
+import User from "../entities/User";
 
 export default class UsersRepository implements IUsersRepository {
   private repository: Repository<User>;

@@ -1,7 +1,6 @@
+import UsersRepository from "@modules/accounts/infra/typeorm/repositories/UsersRepository";
 import { Response, Request, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
-
-import UsersRepository from "../modules/accounts/repositories/implementatiosn/UsersRepository";
 
 declare global {
   namespace Express {

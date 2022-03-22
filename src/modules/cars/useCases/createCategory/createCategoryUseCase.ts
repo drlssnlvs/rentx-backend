@@ -1,8 +1,8 @@
+import Category from "@modules/cars/infra/typeorm/entities/Category";
+import BaseUseCase from "@shared/commons/BaseUseCase";
 import { inject, injectable } from "tsyringe";
-import Category from "../../entities/Category";
-import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
-import BaseUseCase from "../../../../commons/BaseUseCase";
+import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
 interface IRequest {
   name: string;

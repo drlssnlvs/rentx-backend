@@ -1,10 +1,10 @@
 import csvParser from "csv-parse";
 import fs from "fs";
 import { inject, injectable } from "tsyringe";
-import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
-import BaseUseCase from "../../../../commons/BaseUseCase";
-import { files } from "../../../../commons/constants";
+import BaseUseCase from "@shared/commons/BaseUseCase";
+import { files } from "@shared/commons/constants";
+import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
 interface ICategory {
   name: string;

@@ -1,11 +1,9 @@
 import { inject, injectable } from "tsyringe";
 
+import BaseUseCase from "@shared/commons/BaseUseCase";
+import { files } from "@shared/commons/constants";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
-import BaseUseCase from "../../../../commons/BaseUseCase";
-
-import { files } from '../../../../commons/constants'
- 
 @injectable()
 export default class UpdateUserAvatarUseCase extends BaseUseCase {
   constructor(
@@ -18,10 +16,10 @@ export default class UpdateUserAvatarUseCase extends BaseUseCase {
   async execute(userId: string, file: Express.Multer.File): Promise<boolean> {
     const { filename, path } = file;
 
-    const { avatarSrc } = await this.usersRepository.findById(userId)
+    const { avatarSrc } = await this.usersRepository.findById(userId);
 
-    if(avatarSrc) {
-      files.delete(avatarSrc)
+    if (avatarSrc) {
+      files.delete(avatarSrc);
     }
 
     const avatar = {
@@ -29,7 +27,7 @@ export default class UpdateUserAvatarUseCase extends BaseUseCase {
       avatarSrc: path,
     };
 
-    await this.usersRepository.updateUserAvatar(userId, avatar)
+    await this.usersRepository.updateUserAvatar(userId, avatar);
 
     return true;
   }

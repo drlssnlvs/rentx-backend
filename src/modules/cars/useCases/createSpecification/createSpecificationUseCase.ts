@@ -1,9 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
-import Specification from "../../entities/Specification";
+import BaseUseCase from "@shared/commons/BaseUseCase";
+import Specification from "@modules/cars/infra/typeorm/entities/Specification";
 import { ISpecificationsRepository } from "../../repositories/ISpecificationsRepository";
-
-import BaseUseCase from "../../../../commons/BaseUseCase";
 
 interface IRequest {
   name: string;

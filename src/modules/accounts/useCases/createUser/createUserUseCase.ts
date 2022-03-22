@@ -1,12 +1,10 @@
 import { inject, injectable } from "tsyringe";
 import { hash } from "bcryptjs";
 
-import User from "../../entities/User";
-
+import BaseUseCase from "@shared/commons/BaseUseCase";
+import User from "@modules/accounts/infra/typeorm/entities/User";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
-
-import BaseUseCase from "../../../../commons/BaseUseCase";
 
 @injectable()
 export default class CreateUserUseCase extends BaseUseCase {

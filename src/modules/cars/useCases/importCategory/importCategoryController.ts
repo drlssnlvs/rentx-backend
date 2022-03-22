@@ -3,9 +3,8 @@ import "reflect-metadata";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import BaseController from "@shared/commons/BaseController";
 import UseCase from "./importCategoryUseCase";
-
-import BaseController from "../../../../commons/BaseController";
 
 export default class CreateSpecificationController extends BaseController {
   handle = async (req: Request, res: Response): Promise<void> => {
