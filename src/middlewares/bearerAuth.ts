@@ -9,12 +9,12 @@ interface IDecodedToken {
 
 export const UNAUTHORIZED = {
   code: 401,
-  msg: "UNAUTHORIZED",
+  msg: ["UNAUTHORIZED"],
 };
 
 export const FORBIDDEN = {
   code: 403,
-  msg: "FORBIDDEN",
+  msg: ["FORBIDDEN"],
 };
 
 export default function bearerAuth(
@@ -25,7 +25,9 @@ export default function bearerAuth(
   const auth = req.headers.authorization;
 
   if (!auth) {
-    throw new Error(UNAUTHORIZED.msg);
+    return res
+      .status(UNAUTHORIZED.code)
+      .json({ r: false, errors: UNAUTHORIZED.msg });
   }
 
   const [, token] = auth.split(" ");
@@ -38,11 +40,13 @@ export default function bearerAuth(
     const user = usersRepository.findById(id);
 
     if (!user) {
-      throw new Error(UNAUTHORIZED.msg);
+      return res
+        .status(UNAUTHORIZED.code)
+        .json({ r: false, errors: UNAUTHORIZED.msg });
     }
 
     next();
   } catch (error) {
-    throw new Error(FORBIDDEN.msg);
+    return res.status(FORBIDDEN.code).json({ r: false, errors: FORBIDDEN.msg });
   }
 }

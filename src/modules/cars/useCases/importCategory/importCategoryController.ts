@@ -2,16 +2,23 @@ import "reflect-metadata";
 
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import ImporCategoryUseCase from "./importCategoryUseCase";
 
-export default class CreateSpecificationController {
-  async handle(req: Request, res: Response): Promise<Response> {
-    const importCategoryUseCase = container.resolve(ImporCategoryUseCase);
+import UseCase from "./importCategoryUseCase";
+
+import BaseController from "../../../../commons/BaseController";
+
+export default class CreateSpecificationController extends BaseController {
+  handle = async (req: Request, res: Response): Promise<void> => {
+    const useCase = container.resolve(UseCase);
 
     const { file } = req;
 
-    await importCategoryUseCase.execute(file);
+    const result = await useCase.execute(file);
 
-    return res.status(201).json();
-  }
+    if (useCase.isValid()) {
+      return this.Ok(res, result);
+    }
+
+    return this.BadRequest(res, useCase.errors);
+  };
 }

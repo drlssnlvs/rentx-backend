@@ -1,18 +1,25 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import CreateCategoryUseCase from "./createCategoryUseCase";
 
-export default class CreateCategoryController {
-  async handle(req: Request, res: Response): Promise<Response> {
-    const createCategoryUseCase = container.resolve(CreateCategoryUseCase);
+import UseCase from "./createCategoryUseCase";
+
+import BaseController from "../../../../commons/BaseController";
+
+export default class CreateCategoryController extends BaseController {
+  handle = async (req: Request, res: Response): Promise<void> => {
+    const useCase = container.resolve(UseCase);
 
     const { name, description } = req.body;
 
-    const category = await createCategoryUseCase.execute({
+    const result = await useCase.execute({
       name,
       description,
     });
 
-    return res.status(201).json(category);
-  }
+    if (useCase.isValid()) {
+      return this.Ok(res, result);
+    }
+
+    return this.BadRequest(res, useCase.errors);
+  };
 }

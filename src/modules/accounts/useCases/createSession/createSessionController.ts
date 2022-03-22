@@ -1,18 +1,25 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import CreateSessionUseCase from "./createSessionUseCase";
 
-export default class CreateSessionController {
-  async handle(req: Request, res: Response): Promise<Response> {
-    const createSessionUseCase = container.resolve(CreateSessionUseCase);
+import UseCase from "./createSessionUseCase";
+
+import BaseController from "../../../../commons/BaseController";
+
+export default class CreateSessionController extends BaseController {
+  handle = async (req: Request, res: Response): Promise<void> => {
+    const useCase = container.resolve(UseCase);
 
     const { email, password } = req.body;
 
-    const { user, token } = await createSessionUseCase.execute({
+    const result = await useCase.execute({
       email,
       password,
     });
 
-    return res.status(201).json({ user, token });
-  }
+    if (useCase.isValid()) {
+      return this.Ok(res, result);
+    }
+
+    return this.BadRequest(res, useCase.errors);
+  };
 }

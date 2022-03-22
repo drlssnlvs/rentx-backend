@@ -1,13 +1,20 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import ListCategoriesUseCase from "./listCategoriesUseCase";
 
-export default class listCategoryController {
-  async handle(req: Request, res: Response): Promise<Response> {
-    const listCategoriesUseCase = container.resolve(ListCategoriesUseCase);
+import UseCase from "./listCategoriesUseCase";
 
-    const category = await listCategoriesUseCase.execute();
+import BaseController from "../../../../commons/BaseController";
 
-    return res.json(category);
-  }
+export default class listCategoryController extends BaseController {
+  handle = async (req: Request, res: Response): Promise<void> => {
+    const useCase = container.resolve(UseCase);
+
+    const result = await useCase.execute();
+
+    if (useCase.isValid()) {
+      return this.Ok(res, result);
+    }
+
+    return this.BadRequest(res, useCase.errors);
+  };
 }

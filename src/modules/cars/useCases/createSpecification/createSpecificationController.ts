@@ -1,20 +1,25 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import CreateSpecificationUseCase from "./createSpecificationUseCase";
 
-export default class CreateSpecificationController {
-  async handle(req: Request, res: Response): Promise<Response> {
-    const createSpecificationUseCase = container.resolve(
-      CreateSpecificationUseCase
-    );
+import UseCase from "./createSpecificationUseCase";
+
+import BaseController from "../../../../commons/BaseController";
+
+export default class CreateSpecificationController extends BaseController {
+  handle = async (req: Request, res: Response): Promise<void> => {
+    const useCase = container.resolve(UseCase);
 
     const { name, description } = req.body;
 
-    const specification = await createSpecificationUseCase.execute({
+    const result = await useCase.execute({
       name,
       description,
     });
 
-    return res.status(201).json(specification);
-  }
+    if (useCase.isValid()) {
+      return this.Ok(res, result);
+    }
+
+    return this.BadRequest(res, useCase.errors);
+  };
 }

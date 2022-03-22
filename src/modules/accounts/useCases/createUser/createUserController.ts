@@ -1,22 +1,27 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import CreateUserUseCase from "./createUserUseCase";
 
-export default class CreateUserController {
-  async handle(req: Request, res: Response): Promise<Response> {
-    const createUserUseCase = container.resolve(CreateUserUseCase);
+import UseCase from "./createUserUseCase";
+
+import BaseController from "../../../../commons/BaseController";
+
+export default class CreateUserController extends BaseController {
+  handle = async (req: Request, res: Response): Promise<void> => {
+    const useCase = container.resolve(UseCase);
 
     const { name, password, email, driverLicense } = req.body;
 
-    const user = await createUserUseCase.execute({
+    const result = await useCase.execute({
       name,
       password,
       email,
       driverLicense,
     });
 
-    delete user.password;
+    if (useCase.isValid()) {
+      return this.Ok(res, result);
+    }
 
-    return res.status(201).json(user);
-  }
+    return this.BadRequest(res, useCase.errors);
+  };
 }

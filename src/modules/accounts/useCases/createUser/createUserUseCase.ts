@@ -6,25 +6,29 @@ import User from "../../entities/User";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 
+import BaseUseCase from "../../../../commons/BaseUseCase";
+
 @injectable()
-export default class CreateUserUseCase {
+export default class CreateUserUseCase extends BaseUseCase {
   constructor(
     @inject("UsersRepository")
     private usersRepository: IUsersRepository
-  ) {}
+  ) {
+    super();
+  }
 
   async execute({
     name,
     password,
     email,
     driverLicense,
-  }: ICreateUserDTO): Promise<User | undefined> {
+  }: ICreateUserDTO): Promise<User | boolean> {
     const checkIfUserAlreadyRegister = await this.usersRepository.findByEmail(
       email
     );
 
     if (checkIfUserAlreadyRegister) {
-      throw new Error("user already register");
+      return this.addError("user already register");
     }
 
     const hashedPassword = await hash(password, 8);
@@ -35,6 +39,8 @@ export default class CreateUserUseCase {
       email,
       driverLicense,
     });
+
+    delete user.password;
 
     return user;
   }

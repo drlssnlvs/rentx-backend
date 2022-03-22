@@ -7,27 +7,31 @@ import User from "../../entities/User";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { ICreateSessionDTO } from "../../dtos/ICreateUserDTO";
 
+import BaseUseCase from "../../../../commons/BaseUseCase";
+
 @injectable()
-export default class CreateUserUseCase {
+export default class CreateUserUseCase extends BaseUseCase {
   constructor(
     @inject("UsersRepository")
     private usersRepository: IUsersRepository
-  ) {}
+  ) {
+    super();
+  }
 
   async execute({
     password,
     email,
-  }: ICreateSessionDTO): Promise<{ user: User; token: string } | undefined> {
+  }: ICreateSessionDTO): Promise<{ user: User; token: string } | boolean> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
-      throw new Error("pass/user incorrect");
+      return this.addError("pass/user incorrect");
     }
 
     const checkPassword = await compare(password, user.password);
 
     if (!checkPassword) {
-      throw new Error("pass/user incorrect");
+      return this.addError("pass/user incorrect");
     }
 
     const token = sign({}, process.env.PRIVATE_KEY, {

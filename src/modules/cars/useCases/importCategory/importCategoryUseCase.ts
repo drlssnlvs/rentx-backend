@@ -3,17 +3,21 @@ import fs from "fs";
 import { inject, injectable } from "tsyringe";
 import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
+import BaseUseCase from "../../../../commons/BaseUseCase";
+
 interface ICategory {
   name: string;
   description: string;
 }
 
 @injectable()
-export default class CraeteSpceificationService {
+export default class CraeteSpceificationService extends BaseUseCase {
   constructor(
     @inject("CategoriesRepository")
     private categoriesRepository: ICategoriesRepository
-  ) {}
+  ) {
+    super();
+  }
 
   loadCategories(file: any) {
     return new Promise((resolve, reject) => {
@@ -37,7 +41,7 @@ export default class CraeteSpceificationService {
     });
   }
 
-  async execute(file: any): Promise<void> {
+  async execute(file: any): Promise<boolean> {
     const categories: any = await this.loadCategories(file);
 
     categories.map(async ({ name, description }: ICategory) => {
@@ -48,5 +52,7 @@ export default class CraeteSpceificationService {
         this.categoriesRepository.create({ name, description });
       }
     });
+
+    return true;
   }
 }
