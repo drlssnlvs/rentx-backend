@@ -9,7 +9,7 @@ export interface ICreateUserDTO {
 
   driverLicense: string;
 
-  admin?: boolean;
+  isAdmin?: boolean;
 
   avatarId?: string;
 
@@ -22,7 +22,6 @@ export interface ICreateUserDTO {
 
 export interface ICreateSessionDTO {
   email: string;
-
   password: string;
 }
 

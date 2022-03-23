@@ -26,6 +26,8 @@ export default class CreateUserUseCase extends BaseUseCase {
       return this.addError("pass/user incorrect");
     }
 
+    console.log(user);
+
     const checkPassword = await compare(password, user.password);
 
     if (!checkPassword) {

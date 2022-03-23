@@ -2,6 +2,8 @@ import UsersRepository from "@modules/accounts/infra/typeorm/repositories/UsersR
 import { Response, Request, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 
+import { errors } from "@shared/commons/constants";
+
 declare global {
   namespace Express {
     export interface Request {
@@ -16,16 +18,6 @@ interface IDecodedToken {
   sub: string;
 }
 
-export const UNAUTHORIZED = {
-  code: 401,
-  msg: ["UNAUTHORIZED"],
-};
-
-export const FORBIDDEN = {
-  code: 403,
-  msg: ["FORBIDDEN"],
-};
-
 export default async function bearerAuth(
   req: Request,
   res: Response,
@@ -34,9 +26,7 @@ export default async function bearerAuth(
   const auth = req.headers.authorization;
 
   if (!auth) {
-    return res
-      .status(UNAUTHORIZED.code)
-      .json({ r: false, errors: UNAUTHORIZED.msg });
+    return res.status(errors.UNAUTHORIZED.code).json(errors.UNAUTHORIZED.msg);
   }
 
   const [, token] = auth.split(" ");
@@ -49,9 +39,7 @@ export default async function bearerAuth(
     const user = await usersRepository.findById(id);
 
     if (!user) {
-      return res
-        .status(UNAUTHORIZED.code)
-        .json({ r: false, errors: UNAUTHORIZED.msg });
+      return res.status(errors.UNAUTHORIZED.code).json(errors.UNAUTHORIZED.msg);
     }
 
     req.user = {
@@ -60,6 +48,6 @@ export default async function bearerAuth(
 
     next();
   } catch (error) {
-    return res.status(FORBIDDEN.code).json({ r: false, errors: FORBIDDEN.msg });
+    return res.status(errors.FORBIDDEN.code).json(errors.FORBIDDEN.msg);
   }
 }

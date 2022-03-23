@@ -24,7 +24,7 @@ export default class Users {
   driverLicense: string;
 
   @Column()
-  admin?: false;
+  isAdmin: boolean;
 
   @Column()
   avatarId?: string;

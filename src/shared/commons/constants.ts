@@ -1,5 +1,23 @@
 import fs from "fs";
 
+export const errors = {
+  UNAUTHORIZED: {
+    code: 401,
+    msg: {
+      r: false,
+      msg: ["UNAUTHORIZED"],
+    },
+  },
+
+  FORBIDDEN: {
+    code: 403,
+    msg: {
+      r: false,
+      msg: ["FORBIDDEN"],
+    },
+  },
+};
+
 export const files = {
   delete: async (path: string) => {
     try {

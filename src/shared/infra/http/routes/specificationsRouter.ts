@@ -2,11 +2,17 @@ import CreateSpecificationController from "@modules/cars/useCases/createSpecific
 import { Router } from "express";
 
 import bearerAuth from "../middlewares/bearerAuth";
+import adminAuth from "../middlewares/admInAuth";
 
 const specificationRouter = Router();
 
 const createSpecificationController = new CreateSpecificationController();
 
-specificationRouter.post("/", bearerAuth, createSpecificationController.handle);
+specificationRouter.post(
+  "/",
+  bearerAuth,
+  adminAuth,
+  createSpecificationController.handle
+);
 
 export default specificationRouter;
