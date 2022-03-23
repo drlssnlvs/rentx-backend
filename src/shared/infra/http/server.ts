@@ -1,4 +1,5 @@
 import "./env";
+import "reflect-metadata";
 
 import express from "express";
 import signale from "signale";

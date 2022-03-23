@@ -38,8 +38,6 @@ export default class CreateUserUseCase extends BaseUseCase {
       driverLicense,
     });
 
-    delete user.password;
-
     return user;
   }
 }

@@ -26,18 +26,22 @@ export default class CreateUserUseCase extends BaseUseCase {
       return this.addError("pass/user incorrect");
     }
 
+    console.log(user.password);
+
     const checkPassword = await compare(password, user.password);
 
     if (!checkPassword) {
       return this.addError("pass/user incorrect");
     }
 
-    const token = sign({}, process.env.PRIVATE_KEY, {
-      expiresIn: "12h",
-      subject: user.id,
-    });
-
-    delete user.password;
+    const token = sign(
+      {},
+      process.env.PRIVATE_KEY ? process.env.PRIVATE_KEY : "mysecrethash",
+      {
+        expiresIn: "12h",
+        subject: user.id,
+      }
+    );
 
     return {
       user,
