@@ -26,8 +26,6 @@ export default class CreateUserUseCase extends BaseUseCase {
       return this.addError("pass/user incorrect");
     }
 
-    console.log(user.password);
-
     const checkPassword = await compare(password, user.password);
 
     if (!checkPassword) {
@@ -42,6 +40,10 @@ export default class CreateUserUseCase extends BaseUseCase {
         subject: user.id,
       }
     );
+
+    if(process.env.NODE_ENV !== "test") {
+      delete user.password
+    }
 
     return {
       user,
