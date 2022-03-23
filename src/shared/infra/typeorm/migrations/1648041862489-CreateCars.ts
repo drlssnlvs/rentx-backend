@@ -27,7 +27,7 @@ export default class CreateCars1648041862489 implements MigrationInterface {
             type: "varchar",
           },
           {
-            name: "descriptioh",
+            name: "description",
             type: "varchar",
           },
           {

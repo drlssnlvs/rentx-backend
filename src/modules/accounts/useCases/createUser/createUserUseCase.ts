@@ -38,8 +38,8 @@ export default class CreateUserUseCase extends BaseUseCase {
       driverLicense,
     });
 
-    if(process.env.NODE_ENV !== "test") {
-      delete user.password
+    if (process.env.NODE_ENV !== "test") {
+      delete user.password;
     }
 
     return user;
