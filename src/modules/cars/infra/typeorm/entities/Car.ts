@@ -4,9 +4,12 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 
 import Category from "./Category";
+import Specification from "./Specification";
 
 @Entity("cars")
 export default class Car {
@@ -34,6 +37,14 @@ export default class Car {
   @ManyToOne(() => Category)
   @JoinColumn({ name: "categoryId" })
   category: Category;
+
+  @ManyToMany(() => Specification)
+  @JoinTable({
+    name: "specificatiosToCars",
+    joinColumns: [{ name: "carId" }],
+    inverseJoinColumns: [{ name: "specificationId" }],
+  })
+  specifications: Specification[];
 
   @Column()
   categoryId: string;

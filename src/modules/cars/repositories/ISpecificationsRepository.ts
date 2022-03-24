@@ -11,4 +11,5 @@ export interface ISpecificationsRepository {
     description,
   }: ICreateSpecifiactionDTO): Promise<Specification>;
   findByName(name: string): Promise<Specification | undefined>;
+  findByIds(ids: string[]): Promise<Specification[]>;
 }

@@ -11,6 +11,14 @@ export default class SpecificationsRepositoryInMemory
 {
   specifications: Specification[] = [];
 
+  async findByIds(ids: string[]): Promise<Specification[]> {
+    const all = this.specifications.filter((specification) =>
+      ids.includes(specification.id)
+    );
+
+    return all;
+  }
+
   async create({
     name,
     description,

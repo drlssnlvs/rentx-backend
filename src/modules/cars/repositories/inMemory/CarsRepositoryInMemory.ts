@@ -7,6 +7,12 @@ import { IAvailableCarsFiltersDTO } from "@modules/cars/dtos/IFilterCarsDTO";
 export default class CarsRepositoryInMemory implements ICarsRepository {
   cars: Car[] = [];
 
+  async findById(id: string): Promise<Car> {
+    const car = this.cars.find((car) => car.id === id);
+
+    return car;
+  }
+
   async listAvailableCarsByFilters({
     brand,
     name,
@@ -40,6 +46,7 @@ export default class CarsRepositoryInMemory implements ICarsRepository {
     fineAmount,
     brand,
     categoryId,
+    specifications,
   }: ICreateCarDTO): Promise<Car> {
     const car = new Car();
 
@@ -53,6 +60,7 @@ export default class CarsRepositoryInMemory implements ICarsRepository {
       fineAmount,
       brand,
       categoryId,
+      specifications,
     });
 
     this.cars.push(car);

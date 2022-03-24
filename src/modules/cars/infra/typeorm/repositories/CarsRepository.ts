@@ -12,6 +12,12 @@ export default class CarsRepository implements ICarsRepository {
     this.repository = getRepository(Car);
   }
 
+  async findById(id: string): Promise<Car> {
+    const car = await this.repository.findOne(id);
+
+    return car;
+  }
+
   async listAvailableCarsByFilters({
     brand,
     name,
@@ -39,6 +45,7 @@ export default class CarsRepository implements ICarsRepository {
     fineAmount,
     brand,
     categoryId,
+    specifications,
   }: ICreateCarDTO): Promise<boolean | Car> {
     const car = this.repository.create({
       name,
@@ -48,6 +55,7 @@ export default class CarsRepository implements ICarsRepository {
       fineAmount,
       brand,
       categoryId,
+      specifications,
     });
 
     await this.repository.save(car);
