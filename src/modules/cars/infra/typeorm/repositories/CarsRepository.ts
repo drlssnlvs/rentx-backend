@@ -1,4 +1,5 @@
 import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
+import { IAvailableCarsFiltersDTO } from "@modules/cars/dtos/IFilterCarsDTO";
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { getRepository, Repository } from "typeorm";
 
@@ -10,6 +11,26 @@ export default class CarsRepository implements ICarsRepository {
   constructor() {
     this.repository = getRepository(Car);
   }
+
+  async listAvailableCarsByFilters({
+    brand,
+    name,
+    categoryId,
+  }: IAvailableCarsFiltersDTO): Promise<Car[]> {
+    const carsQuery = await this.repository
+      .createQueryBuilder("c")
+      .where("available = :available", { available: true });
+
+    if (brand) carsQuery.andWhere("c.brand = :brand", { brand });
+    if (name) carsQuery.andWhere("c.name = :name", { name });
+    if (categoryId)
+      carsQuery.andWhere("c.categoryId = :categoryId", { categoryId });
+
+    const cars = await carsQuery.getMany();
+
+    return cars;
+  }
+
   async create({
     name,
     description,

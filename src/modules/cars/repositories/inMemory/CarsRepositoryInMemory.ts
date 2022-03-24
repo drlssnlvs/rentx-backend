@@ -2,9 +2,31 @@ import { v4 as uuid } from "uuid";
 import { ICarsRepository } from "../ICarsRepository";
 import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
 import Car from "@modules/cars/infra/typeorm/entities/Car";
+import { IAvailableCarsFiltersDTO } from "@modules/cars/dtos/IFilterCarsDTO";
 
-export default class CarsRepository implements ICarsRepository {
+export default class CarsRepositoryInMemory implements ICarsRepository {
   cars: Car[] = [];
+
+  async listAvailableCarsByFilters({
+    brand,
+    name,
+    categoryId,
+  }: IAvailableCarsFiltersDTO): Promise<Car[]> {
+    let search: Car[];
+
+    search = this.cars.filter((car) => car.available);
+
+    if (brand || name || categoryId) {
+      search = search.filter(
+        (car) =>
+          (brand && car.brand === brand) ||
+          (name && car.name === name) ||
+          (categoryId && car.categoryId === categoryId)
+      );
+    }
+
+    return search;
+  }
 
   async findByLicensePlate(licensePlate: string): Promise<Car> {
     return this.cars.find((car) => car.licensePlate === licensePlate);
