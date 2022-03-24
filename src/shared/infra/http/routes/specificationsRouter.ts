@@ -2,7 +2,7 @@ import CreateSpecificationController from "@modules/cars/useCases/createSpecific
 import { Router } from "express";
 
 import bearerAuth from "../middlewares/bearerAuth";
-import adminAuth from "../middlewares/admInAuth";
+import adminAuth from "../middlewares/adminAuth";
 
 const specificationRouter = Router();
 

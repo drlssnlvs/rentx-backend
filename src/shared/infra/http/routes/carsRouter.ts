@@ -4,7 +4,7 @@ import CreateCarController from "@modules/cars/useCases/createCar/createCarContr
 import ListAvailableCarsController from "@modules/cars/useCases/listAvailableCars/listAvailableCarsController";
 
 import bearerAuth from "../middlewares/bearerAuth";
-import adminAuth from "../middlewares/admInAuth";
+import adminAuth from "../middlewares/adminAuth";
 
 const carsRouter = Router();
 

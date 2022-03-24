@@ -5,7 +5,7 @@ import ImportCategoryController from "@modules/cars/useCases/importCategory/impo
 import { Router } from "express";
 
 import bearerAuth from "../middlewares/bearerAuth";
-import adminAuth from "../middlewares/admInAuth";
+import adminAuth from "../middlewares/adminAuth";
 
 import multer from "multer";
 
