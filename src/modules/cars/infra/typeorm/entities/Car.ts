@@ -6,6 +6,8 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from "typeorm";
 
 import Category from "./Category";
@@ -51,4 +53,10 @@ export default class Car {
 
   @Column()
   available?: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
