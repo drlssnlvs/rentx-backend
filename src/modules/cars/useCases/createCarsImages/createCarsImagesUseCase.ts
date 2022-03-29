@@ -15,13 +15,15 @@ export default class CreateCarsImagesUseCase extends BaseUseCase {
   }
 
   async execute({ carId, images }: ICreateCarsImagesDTO): Promise<CarImage[]> {
+    const findIfImagesCarsAlreadyExists =
+      await this.carsImagesRepository.findImagesCarsByCarId(carId);
 
-    const findIfImagesCarsAlreadyExists = await this.carsImagesRepository.findImagesCarsByCarId(carId)
-
-    findIfImagesCarsAlreadyExists.map(async(image) => {
-      await files.delete(image.carImageSrc.toString())
-      await this.carsImagesRepository.deleteCarImageByCarImageId(image.carImageId.toString())
-    })
+    findIfImagesCarsAlreadyExists.map(async (image) => {
+      await files.delete(image.carImageSrc.toString());
+      await this.carsImagesRepository.deleteCarImageByCarImageId(
+        image.carImageId.toString()
+      );
+    });
 
     const promises = images.map(
       (item) =>
@@ -35,11 +37,10 @@ export default class CreateCarsImagesUseCase extends BaseUseCase {
 
             resolve(imageCar);
           }, 1)
-
         )
     );
 
-    const result = await Promise.all(promises) as CarImage[];
+    const result = (await Promise.all(promises)) as CarImage[];
 
     return result;
   }

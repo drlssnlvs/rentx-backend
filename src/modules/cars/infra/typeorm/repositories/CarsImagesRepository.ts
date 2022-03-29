@@ -12,8 +12,8 @@ export default class CategoriesRepository implements ICarsImagesRepository {
   }
 
   async deleteCarImageByCarImageId(carImageId: string): Promise<boolean> {
-    await this.repository.delete({ carImageId })
-    return true
+    await this.repository.delete({ carImageId });
+    return true;
   }
 
   async findImagesCarsByCarId(carId: string): Promise<CarImage[]> {
