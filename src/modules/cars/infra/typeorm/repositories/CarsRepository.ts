@@ -12,6 +12,14 @@ export default class CarsRepository implements ICarsRepository {
     this.repository = getRepository(Car);
   }
 
+  async changeAvailable(id: string, status: boolean): Promise<void> {
+    await this.repository
+      .createQueryBuilder("c")
+      .update({ available: status })
+      .where("id = :id", { id })
+      .execute();
+  }
+
   async findById(id: string): Promise<Car> {
     const car = await this.repository.findOne(id);
 
