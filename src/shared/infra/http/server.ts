@@ -1,25 +1,17 @@
 import "./env";
 import "reflect-metadata";
 
-import express from "express";
+import { Application } from "express";
 import signale from "signale";
-import swaggerUi from "swagger-ui-express";
+import App from "./app";
 
-import swaggerConfig from "config/swagger.json";
-import routes from "./routes";
+new App()
+  .setup()
+  .then((app: Application) => {
+    const PORT = process.env.PORT || 3333;
 
-import "../typeorm";
-
-import "@shared/container/index";
-
-const app = express();
-
-app.use(express.json());
-
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerConfig));
-
-app.use(express.static("tmp"));
-
-app.use(routes);
-
-app.listen(3333, () => signale.success("server on"));
+    app.listen(PORT, () => signale.star(`app on port ${PORT}`));
+  })
+  .catch((err: Error) =>
+    signale.warn(`error to start app ${JSON.stringify(err)}`)
+  );

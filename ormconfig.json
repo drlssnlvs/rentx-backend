@@ -4,7 +4,8 @@
     "host": "localhost", 
     "username": "admin",
     "password": "admin",
-    "database": "rentx", 
+    "database": "rentx",
+    "keepConnectionAlive": true, 
     "migrations": ["./src/shared/infra/typeorm/migrations/*.ts"],
     "entities": ["./src/modules/**/infra/typeorm/entities/*.ts"],
     "cli": {
