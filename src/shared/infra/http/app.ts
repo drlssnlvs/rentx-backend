@@ -37,7 +37,6 @@ export default class App {
 
   async setup(): Promise<Application> {
     if (process.env.NODE_ENV !== "test") {
-      console.log("caiu em test db");
       await this.database();
     }
 
