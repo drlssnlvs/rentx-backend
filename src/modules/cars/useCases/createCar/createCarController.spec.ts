@@ -115,4 +115,22 @@ describe("Create Car", () => {
     expect(status).toBe(400);
     expect(body.r).toBe(false);
   });
+
+  it("should be not able to create a new car with nonexistent category", async () => {
+    Object.assign(car, {
+      categoryId: uuid(),
+      licensePlate: "XSA-3213"
+    });
+
+    const { body, status } = await request(app)
+      .post(paths.cars)
+      .send({ ...car })
+      .set({
+        Authorization: `Bearer ${adminToken}`,
+      });
+
+    expect(status).toBe(400);
+    expect(body.r).toBe(false);
+    expect(body.errors[0]).toEqual("category does not exists");
+  });
 });
