@@ -29,5 +29,6 @@ describe("CreateUser", () => {
     const userCreated = await createUserUseCase.execute(user);
 
     expect(userCreated).toHaveProperty("id");
+    expect(userCreated).toHaveProperty("password");
   });
 });

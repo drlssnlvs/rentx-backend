@@ -13,7 +13,5 @@ export default class listCategoryController extends BaseController {
     if (useCase.isValid()) {
       return this.Ok(res, result);
     }
-
-    return this.BadRequest(res, useCase.errors);
   };
 }
