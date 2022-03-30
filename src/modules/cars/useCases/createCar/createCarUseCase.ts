@@ -32,12 +32,13 @@ export default class CreateCarUseCase extends BaseUseCase {
     if (checkIfCarLicensePlateAlreadyRegister)
       return this.addError("a car with this license plate already register");
 
-      const checkIfCategoryExists = await this.categoriesrRepository.findById(categoryId)
+    const checkIfCategoryExists = await this.categoriesrRepository.findById(
+      categoryId
+    );
 
-      if(!checkIfCategoryExists) {
-        return this.addError("category does not exists")
-      }
-
+    if (!checkIfCategoryExists) {
+      return this.addError("category does not exists");
+    }
 
     const car = await this.carsRepository.create({
       name,

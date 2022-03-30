@@ -10,12 +10,11 @@ import {
 export default class CategoriesRepositoryInMemory
   implements ICategoriesRepository
 {
- 
- categories: Category[] = [];
+  categories: Category[] = [];
 
- async findById(id: string): Promise<Category> {
-  return this.categories.find((category) => category.id === id);
-}
+  async findById(id: string): Promise<Category> {
+    return this.categories.find((category) => category.id === id);
+  }
 
   async findByName(name: string): Promise<Category> {
     const category = this.categories.find((category) => category.name === name);

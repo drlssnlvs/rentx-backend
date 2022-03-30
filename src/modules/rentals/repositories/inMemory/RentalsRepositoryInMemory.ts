@@ -6,19 +6,28 @@ import { IRentalsRepository } from "../IRentalsRepository";
 export default class rentalsRepositoryInMemory implements IRentalsRepository {
   rentals: Rental[] = [];
 
+  async findByRentalIdAndUserId(id: string, userId: string): Promise<Rental> {
+    return this.rentals.find((rental) => rental.id === id && rental.userId === userId);
+  }
+
   async create({
     carId,
     userId,
     expectReturnDate,
+    endDate,
+    total,
+    id
   }: ICreateRentalDTO): Promise<Rental> {
     const rental = new Rental();
 
     Object.assign(rental, {
       startDate: new Date(),
-      id: uuid(),
+      id: id ? id : uuid(),
       userId,
       carId,
       expectReturnDate,
+      endDate,
+      total
     });
 
     this.rentals.push(rental);

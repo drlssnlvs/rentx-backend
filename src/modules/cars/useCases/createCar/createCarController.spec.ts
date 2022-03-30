@@ -119,7 +119,7 @@ describe("Create Car", () => {
   it("should be not able to create a new car with nonexistent category", async () => {
     Object.assign(car, {
       categoryId: uuid(),
-      licensePlate: "XSA-3213"
+      licensePlate: "XSA-3213",
     });
 
     const { body, status } = await request(app)
